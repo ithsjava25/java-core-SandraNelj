@@ -31,7 +31,7 @@ public class Warehouse {
 
     public void addProduct(Product product) {
         if (product == null) {
-            throw new IllegalArgumentException("Product cannot be null");
+            throw new IllegalArgumentException("Product cannot be null.");
         }
         products.add(product);
     }
@@ -68,7 +68,7 @@ public class Warehouse {
     }
 
     public void updateProductPrice(UUID id, BigDecimal newPrice) {
-        Product product = getProductById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id " + id));
+        Product product = getProductById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
         product.setPrice(newPrice);
     }
 

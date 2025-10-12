@@ -11,7 +11,7 @@ public class ElectronicsProduct extends Product implements Shippable {
                               BigDecimal price, int warrantyMonths, BigDecimal weight) {
         super(uuid, name, category, price);
         if (warrantyMonths < 0) {
-            throw new IllegalArgumentException("Warranty months cannot be negative");
+            throw new IllegalArgumentException("Warranty months cannot be negative.");
         }
         this.warrantyMonths = warrantyMonths;
         this.weight = weight;
@@ -33,6 +33,6 @@ public class ElectronicsProduct extends Product implements Shippable {
     }
     @Override
     public String productDetails() {
-        return "Electronics: " + name() + ", warranty: " + warrantyMonths + "months.";
+        return "Electronics: " + name() + ", Warranty: " + warrantyMonths + " months";
     }
 }

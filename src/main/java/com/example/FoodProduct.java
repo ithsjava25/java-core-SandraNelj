@@ -11,9 +11,9 @@ public class FoodProduct extends Product implements Perishable, Shippable{
                        BigDecimal price, LocalDate expirationDate, BigDecimal weight) {
         super(uuid, name, category, price);
         if (price.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Price cannot be negative");
+            throw new IllegalArgumentException("Price cannot be negative.");
         if (weight.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Weight cannot be negative");
+            throw new IllegalArgumentException("Weight cannot be negative.");
         this.expirationDate = expirationDate;
         this.weight = weight;
     }

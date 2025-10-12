@@ -13,7 +13,7 @@ public abstract class Product {
         if (name == null || name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
         if (category == null) throw new IllegalArgumentException("Category cannot be null");
         if (price == null) throw new IllegalArgumentException("Price cannot be null");
-        if (price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("Price cannot be negative");
+        if (price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("Price cannot be negative.");
 
         this.uuid = uuid;
         this.name = name;

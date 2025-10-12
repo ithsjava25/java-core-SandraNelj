@@ -10,10 +10,10 @@ public class Category {
     }
     public static Category of(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Category name cannot be null");
+            throw new IllegalArgumentException("Category name can't be null");
         }
         if (name.isBlank()) {
-            throw new IllegalArgumentException("Category name cannot be blank");
+            throw new IllegalArgumentException("Category name can't be blank");
         }
         String normalized = name.trim().substring(0, 1).toUpperCase() + name.trim().substring(1).toLowerCase();
         return CACHE.computeIfAbsent(normalized, Category::new);
