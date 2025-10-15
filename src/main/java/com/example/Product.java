@@ -38,7 +38,7 @@ public abstract class Product {
 
     public void setPrice(BigDecimal price) {
         if (price == null || price.compareTo(BigDecimal.ZERO) < 0)
-            throw new IllegalArgumentException("Price cannot be negative");
+            throw new IllegalArgumentException("Price can't be negative");
         this.price = price;
     }
 

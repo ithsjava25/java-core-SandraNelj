@@ -17,20 +17,20 @@ public class FoodProduct extends Product implements Perishable, Shippable{
         this.expirationDate = expirationDate;
         this.weight = weight;
     }
-@Override
-public LocalDate expirationDate() {
+    @Override
+    public LocalDate expirationDate() {
         return expirationDate;
     }
-@Override
-public BigDecimal weight() {
+    @Override
+    public BigDecimal weight() {
         return weight;
     }
-@Override
-public BigDecimal calculateShippingCost() {
+    @Override
+    public BigDecimal calculateShippingCost() {
     return weight.multiply (BigDecimal.valueOf(50));
-}
-@Override
-public String productDetails() {
+    }
+    @Override
+    public String productDetails() {
     return "Food: " + name() + ", Expires: " + expirationDate;
-}
+    }
 }

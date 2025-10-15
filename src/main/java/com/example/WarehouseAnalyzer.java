@@ -151,19 +151,25 @@ class WarehouseAnalyzer {
     public List<Product> findPriceOutliers(double standardDeviations) {
         List<Product> products = new ArrayList<>(warehouse.getProducts());
         int n = products.size();
-        if (n == 0) return List.of();
-        double sum = products.stream().map(Product::price).mapToDouble(bd -> bd.doubleValue()).sum();
-        double mean = sum / n;
-        double variance = products.stream()
-                .map(Product::price)
-                .mapToDouble(bd -> Math.pow(bd.doubleValue() - mean, 2))
-                .sum() / n;
-        double std = Math.sqrt(variance);
+        if (n < 2) return List.of();
+
+        BigDecimal sum = products.stream().map(Product::price).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal mean = sum.divide(new BigDecimal(n), MathContext.DECIMAL128);
+
+        BigDecimal variance = products.stream()
+                .map(p -> p.price().subtract(mean).pow(2))
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(new BigDecimal(n), MathContext.DECIMAL128);
+
+        double std = Math.sqrt(variance.doubleValue());
         double threshold = standardDeviations * std;
+
         List<Product> outliers = new ArrayList<>();
         for (Product p : products) {
-            double diff = Math.abs(p.price().doubleValue() - mean);
-            if (diff > threshold) outliers.add(p);
+            double diff = Math.abs(p.price().doubleValue() - mean.doubleValue());
+            if (diff > threshold) {
+                outliers.add(p);
+            }
         }
         return outliers;
     }
@@ -179,7 +185,8 @@ class WarehouseAnalyzer {
      */
     public List<ShippingGroup> optimizeShippingGroups(BigDecimal maxWeightPerGroup) {
         double maxW = maxWeightPerGroup.doubleValue();
-        List<Shippable> items = warehouse.shippableProducts();
+        List<Shippable> items = new ArrayList<> (warehouse.shippableProducts());
+
         // Sort by descending weight (First-Fit Decreasing)
         items.sort((a, b) -> Double.compare(
                 b.weight() != null ? b.weight().doubleValue() : 0.0,
