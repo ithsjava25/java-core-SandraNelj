@@ -200,7 +200,7 @@ class EdgeCaseTest {
                             new BigDecimal("15.00").add(new BigDecimal(i % 3)), LocalDate.now().plusDays(5), BigDecimal.ONE))
             );
             Product outlierHigh = new FoodProduct(UUID.randomUUID(), "Expensive", Category.of("Test"),
-                    new BigDecimal("500.00"), LocalDate.now().plusDays(5), BigDecimal.ONE);
+                    new BigDecimal("35.00"), LocalDate.now().plusDays(5), BigDecimal.ONE);
             Product outlierLow = new FoodProduct(UUID.randomUUID(), "Cheap", Category.of("Test"),
                     new BigDecimal("0.01"), LocalDate.now().plusDays(5), BigDecimal.ONE);
 
@@ -240,7 +240,7 @@ class EdgeCaseTest {
                     BigDecimal.TEN, 12, new BigDecimal("2.8")));
 
             // Act - Group products to minimize total shipping cost
-            List<ShippingGroup> optimizedGroups = analyzer.optimizeShippingGroups(new BigDecimal("10.0"));
+            List<WarehouseAnalyzer.ShippingGroup> optimizedGroups = analyzer.optimizeShippingGroups(new BigDecimal("10.0"));
 
             // Assert
             assertThat(optimizedGroups)
@@ -335,7 +335,7 @@ class EdgeCaseTest {
             );
 
             // Act
-            InventoryValidation validation = analyzer.validateInventoryConstraints();
+            WarehouseAnalyzer.InventoryValidation validation = analyzer.validateInventoryConstraints();
 
             // Assert
             assertThat(validation.getHighValuePercentage())
@@ -376,7 +376,7 @@ class EdgeCaseTest {
                     new BigDecimal("50.00"), 12, new BigDecimal("0.1")));
 
             // Act
-            InventoryStatistics stats = analyzer.getInventoryStatistics();
+            WarehouseAnalyzer.InventoryStatistics stats = analyzer.getInventoryStatistics();
 
             // Assert
             assertThat(stats.getTotalProducts()).isEqualTo(4);
