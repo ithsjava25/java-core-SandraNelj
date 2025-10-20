@@ -20,6 +20,9 @@ public class Warehouse {
         }
         return instance;
     }
+    public static Warehouse getInstance() {
+        return getInstance("Default");
+    }
 
     public void clearProducts() {
         products.clear();
@@ -32,6 +35,11 @@ public class Warehouse {
     public void addProduct(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null.");
+        }
+        boolean duplicate = products.stream()
+                        .anyMatch(p->p.uuid().equals(product.uuid()));
+        if (duplicate) {
+            throw new IllegalArgumentException("Product with that id already exists, use updateProduct for updates.");
         }
         products.add(product);
     }
